@@ -1,0 +1,33 @@
+<table id="new-measure-template" style="visibility:hidden">
+    <tr style="background-color:rgb(228, 255, 228)">
+        <td>
+            <input class="measure-index" type="hidden" name="Measures.Index" value="--index--"/>
+            @if (Model != null) {
+                <input type="hidden" name="Measures[--index--].WorkerId" value="@Model.IdWorker" />
+            }
+            -
+        </td>
+        <td class="text-left">
+            <input min="1753-01-01T00:00:00" max="9999-12-31T00:00:00" type="datetime-local" name="Measures[--index--].PerformedOn" required class="form-control" />
+        </td>
+        <td class="text-left">
+            <input name="Measures[--index--].Description" class="form-control" />
+        </td>
+        <td class="text-left">
+            <select class="form-select" name="Measures[--index--].MeasureTypeId" asp-items="ViewBag.MeasureTypes" required>
+                <option disabled selected value="Select a type"></option>
+            </select>
+        </td>
+        <td class="text-left">
+            <select class="form-select" name="Measures[--index--].VegetationId" asp-items="ViewBag.Vegetations" required>
+                <option disabled selected value="Select a vegetation"></option>
+            </select>
+        </td>
+        <td class="text-left">
+            <input name="Measures[--index--].DurationMinutes" class="form-control" min="0"/>
+        </td>
+        <td>
+            <a class="btn btn-sm btn-danger delete-measure" title="Delete"><i class="fas fa-trash-alt"></i></a>
+        </td>
+    </tr>
+</table>

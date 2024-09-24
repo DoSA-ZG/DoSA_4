@@ -1,0 +1,144 @@
+@model VegetationViewModel
+<h1>Plots</h1>
+<div class="input-group mb-3">
+    <!-- Autocomplete input for Plot.Tag -->
+    <input type="text" id="plotTagInput" class="form-control" placeholder="Enter plot tag" autocomplete="off" />
+    <!-- Autocomplete input for PlantClass.Name -->
+    <input type="text" id="plantClassNameInput" class="form-control" placeholder="Enter plant class name" autocomplete="off" />
+    <span class="input-group-btn">
+        <button id="filterButton" class="btn btn-default" type="button">Filter</button>
+    </span>
+</div>
+<div id="selectedPlotId" style="padding-top: 5px;"></div>
+<div id="selectedPlantClassId" style="padding-top: 5px;"></div>
+<h1>Vegetation</h1>
+
+<p>
+    <a class="btn btn-primary text-white" asp-action="Create">Add New</a>
+
+</p>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Units)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PlantedOn)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.RemovedOn)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.YieldAnticipatedOn)
+            </th>
+          
+            <th>
+                @Html.DisplayNameFor(model => model.ExpiryAnticipatedOn)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PlantClassName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PlotTag)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model.Vegetations) {
+    <tr>
+        <td>
+            <span class="display-mode">@Html.DisplayFor(modelItem => item.Units)</span>
+            <input asp-for="Units" class="edit-mode form-control" value="@item.Units" style="display: none"/>
+        </td>
+        <td>
+            <span class="display-mode" data-id="@item.PlantedOn">@item.PlantedOn</span>
+            <input type="datetime-local" class="edit-mode form-control" value="@item.PlantedOn" style="display: none"/>
+        </td>
+        <td>
+            <span class="display-mode" data-id="@item.RemovedOn">@item.RemovedOn</span>
+            <input type="datetime-local" class="edit-mode form-control" style="display: none"/>
+        </td>
+        <td>
+            <span class="display-mode" data-id="@item.IdVegetation">@item.YieldAnticipatedOn</span>
+            <input asp-for="YieldAnticipatedOn" data-id="@item.IdVegetation" class="edit-mode form-control" style="display: none"/>
+        </td>
+        <td>
+            <span class="display-mode" data-id="@item.IdVegetation">@item.ExpiryAnticipatedOn</span>
+            <input asp-for="ExpiryAnticipatedOn" class="edit-mode form-control" style="display: none"/>
+        </td>
+        <td>
+            <span class="display-mode" data-id="@item.IdVegetation">@item.PlantClass.Name</span>
+            <input type="text" class="edit-mode form-control" value="@item.PlantClass.Name" autocomplete="off" style="display: none"/>
+        </td>
+        <td>
+            <span class="display-mode" data-id="@item.IdVegetation">@item.Plot.Tag</span>
+            <input type="text" class="edit-mode form-control" value="@item.Plot.Tag" autocomplete="off" style="display: none"/>
+            </td>
+        <td>
+            <a asp-action="Edit" asp-route-id="@item.IdVegetation">Edit</a> | 
+            <a asp-action="Delete" asp-route-id="@item.IdVegetation">Delete</a>
+        </td>
+    </tr>
+}
+    </tbody>
+</table>
+@section scripts {
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    
+    <!-- jQuery UI library -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+
+    <script>
+        var selectedPlotId = "";
+        var selectedPlantClassId = "";
+
+        $(document).ready(function () {
+            setupAutocomplete('#plotTagInput', '@Url.Action("GetPlotTags", "Plot")', function (event, ui) {
+                selectedPlotId = ui.item.id; // Store the ID
+                $('#selectedPlotId').text('Selected Plot ID: ' + selectedPlotId);
+            });
+
+            setupAutocomplete('#plantClassNameInput', '@Url.Action("GetPlantClassNames", "PlantClass")', function (event, ui) {
+                selectedPlantClassId = ui.item.id; // Store the ID
+                $('#selectedPlantClassId').text('Selected PlantClass ID: ' + selectedPlantClassId);
+            });
+
+            $('#filterButton').click(function () {
+                var url = '@Url.Action("Index", "Vegetation")' + '?';
+                if (selectedPlotId) {
+                    url += 'plotId=' + selectedPlotId + '&';
+                }
+                if (selectedPlantClassId) {
+                    url += 'plantClassId=' + selectedPlantClassId;
+                }
+                window.location.href = url;
+            });
+        });
+
+        function setupAutocomplete(selector, sourceUrl, selectCallback) {
+            $(selector).autocomplete({
+                source: function (request, response) {
+                    $.ajax({
+                        url: sourceUrl,
+                        dataType: "json",
+                        data: { term: request.term },
+                        success: function (data) {
+                            response($.map(data, function (item) {
+                                return { label: item.name, value: item.name, id: item.id };
+                            }));
+                        }
+                    });
+                },
+                minLength: 1,
+                select: selectCallback
+            });
+        }
+    </script>
+}
+
+
+
+

@@ -1,0 +1,41 @@
+﻿@{
+    ViewData["Title"] = "Reports";
+}
+
+<div class="container mt-4">
+    <div class="row">
+        <div class="col">
+            <a asp-action="SimpleHarvestReport" asp-controller="HarvestReports" class="text-muted">Simple harvest report (not working)</a>
+        </div>
+
+    </div>
+
+    <div class="row">
+        <div class="col">
+            <a asp-action="MasterDetailHarvestReportExcel" asp-controller="HarvestReports">Harvest-Purchase report Excel (master-detail)</a>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            <a asp-action="SimpleHarvestReportExcel" asp-controller="HarvestReports">Simple harvest report Excel</a>
+        </div>
+    </div>
+
+    <div class="row mt-4">
+        <div class="col">
+            <form method="post" enctype="multipart/form-data" asp-action="UploadModifiedExcel">
+                <div class="form-group">
+                    <label for="fileInput">Import modified <strong>Simple</strong> Excel Report:</label>
+                    <input type="file" class="form-control-file" id="fileInput" name="file" accept=".xlsx">
+                </div>
+                <button type="submit" class="btn btn-primary">Import and Download</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

@@ -1,0 +1,105 @@
+﻿@model System.ValueTuple<RPPP_WebApp.Model.Harvest, List<RPPP_WebApp.Model.Purchase>>
+
+@{
+    ViewData["Title"] = "Details";
+    int startingRecordNumber = 1;
+}
+
+<div id="harvestDetailsContainer">
+<h1>Details</h1>
+
+<div>
+    <h4>Harvest</h4>
+    <hr />
+    <dl class="row">
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Item1.CollectedOn)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Item1.CollectedOn)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Item1.Weight)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Item1.Weight)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Item1.Tag)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Item1.Tag)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Item1.Vegetation)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Item1.Vegetation.IdVegetation)
+        </dd>
+    </dl>
+</div>
+<div>
+
+    <a class="btn btn-warning text-white" onclick="loadEditFormHarvest(@Model.Item1?.IdHarvest)" data-toggle="modal" data-target="#editHarvestModal">Edit</a>
+    <a class="btn btn-danger text-white" onclick="deleteHarvest(@Model.Item1?.IdHarvest)" data-toggle="modal" data-target="#deleteHarvestModal">Delete</a>
+
+
+</div>
+<a class="btn btn-secondary text-white mt-3" asp-action="Index">Back to List</a>
+</div>
+<div id="detailsContainer">
+<h4 class="mt-3">Purchases related to this harvest</h4>
+<table class="table">
+    <thead class="bg-light">
+    <tr>
+        <th>#</th>
+
+        <th>
+            @Html.DisplayNameFor(model => model.Item2[0].CollectedOn)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Item2[0].Weight)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Item2[0].Gain)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Item2[0].Tag)
+        </th>
+    </tr>
+    </thead>
+
+    @foreach (var purchase in Model.Item2.Where(p => p.HarvestId == Model.Item1.IdHarvest))
+    {
+        <tr>
+            <td>@(startingRecordNumber++)</td>
+
+            <td>
+                @Html.DisplayFor(modelItem => purchase.CollectedOn)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => purchase.Weight)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => purchase.Gain)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => purchase.Tag)
+            </td>
+            <td>
+                    <!-- Edit button -->
+                    <a class="btn btn-warning text-white" onclick="loadEditForm(@purchase.IdPurchase)" data-toggle="modal" data-target="#editPurchaseModal">Edit</a>
+
+                    <!-- Details button -->
+                    <a class="btn btn-success" onclick="redirectToDetails(@purchase.IdPurchase)">Details</a>
+
+                    <!-- Delete button -->
+                    <a class="btn btn-danger text-white" onclick="deletePurchase(@purchase.IdPurchase)" data-toggle="modal" data-target="#deletePurchaseModal">Delete</a>
+
+            </td>
+        </tr>
+    }
+</table>
+    <a class="btn btn-info text-white" onclick="addNewPurchase(@Model.Item1.IdHarvest)" data-toggle="modal" data-target="#addNewPurchaseModal">Add New Purchase</a>
+</div>
+

@@ -1,0 +1,54 @@
+﻿@model RPPP_WebApp.Model.PlantClass
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1>Details</h1>
+
+<div>
+    <h4>PlantClass</h4>
+    <hr />
+    <dl class="row">
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Name)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Name)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Passport)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Passport)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.FiberPerServing)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.FiberPerServing)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.PotassiumPerServing)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.PotassiumPerServing)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Parent)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Parent.Name)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a class="btn btn-success" asp-action="Details" asp-route-id="@Model.IdPlantClass" asp-controller="PlantClass">Details</a>
+    <a class="btn btn-warning text-white" asp-action="Edit" asp-route-id="@Model.IdPlantClass" asp-controller="PlantClass">Edit</a>
+    <a class="btn btn-danger" asp-action="Edit" asp-route-id="@Model.IdPlantClass" asp-controller="Ingredient">Delete</a>
+    <a class="btn btn-info text-white" asp-action="Details" asp-controller="Recipe" asp-route-id="@Model.IdPlantClass" asp-route-entityType="PlantClass">Back to list</a>
+
+
+
+
+</div>

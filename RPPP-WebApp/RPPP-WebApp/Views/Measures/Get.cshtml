@@ -1,0 +1,26 @@
+@model MeasureViewModel
+@using RPPP_WebApp.Controllers
+
+<tr hx-swap="outerHTML" hx-target="this">
+    <td class="text-left">@Html.DisplayFor(_ => Model.IdMeasure)</td>
+    <td class="text-left">@Html.DisplayFor(_ => Model.PerformedOn)</td>
+    <td class="text-left">@Html.DisplayFor(_ => Model.Description)</td>
+    <td class="text-left">@Html.DisplayFor(_ => Model.MeasureTypeCaption)</td>
+    <td class="text-left">@Html.DisplayFor(_ => Model.Vegetation.Summary)</td>
+    @if (Model.Worker == null)
+    {
+        <td class="text-left">@Html.DisplayFor(_ => Model.Worker)</td>
+    }
+    else
+    {
+        <td class="text-left">@Html.DisplayFor(_ => Model.Worker.Summary)</td>
+    }
+    <td class="text-left">@Html.DisplayFor(_ => Model.DurationMinutes)</td>
+    <td style="width: 1%; white-space: nowrap;">
+        <a class="btn btn-warning btn-sm" title="Edit" hx-get="@Url.Action(nameof(MeasuresController.Edit), new { id = Model.IdMeasure })"><i
+            class="fas fa-edit"></i></a>
+        <a class="btn btn-sm btn-danger" title="Delete" hx-confirm="Delete the measure?" hx-delete="@Url.Action(nameof(MeasuresController.Delete), new { id = Model.IdMeasure })">
+            <i class="fas fa-trash-alt"></i>
+        </a>
+    </td>
+</tr>

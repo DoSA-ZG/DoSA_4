@@ -1,0 +1,18 @@
+<script>
+    @{
+      if (ViewBag.ErrorOccurred != null && ViewBag.ErrorOccurred) {
+        string msg = null;
+        if (ViewBag.Message != null) {
+          msg = ViewBag.Message;
+        } else {
+          msg = "Unknown error";
+        }
+        <text>toastr.error("@msg", "Error", {timeOut: 0, tapToDismiss: false, closeButton: true});</text>
+      } else if (ViewBag.Message != null) {
+        <text>toastr.success("@ViewBag.Message");</text>
+      }
+    }
+    document.body.addEventListener("showMessage", function(evt) {
+      toastr[evt.detail.messageType](evt.detail.message);
+    });
+</script>

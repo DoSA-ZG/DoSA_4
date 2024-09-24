@@ -1,0 +1,33 @@
+@model MeasureViewModel
+@using RPPP_WebApp.Controllers
+
+<tr hx-swap="outerHTML" hx-target="this">
+    <td class="text-left">@Html.DisplayFor(_ => Model.IdMeasure)</td>
+    <td class="text-left"><input type="datetime-local" asp-for="PerformedOn" class="form-control" /></td>
+    <td class="text-left"><input asp-for="Description" class="form-control" /></td>
+    <td class="text-left">
+        <input asp-for="MeasureTypeCaption" class="form-control" data-autocomplete="measuretypes" data-autocomplete-placeholder-name="measure-type"/>
+        <input asp-for="MeasureTypeId" type="hidden" data-autocomplete-placeholder="measure-type"/>
+    </td>
+    <td class="text-left">
+        <select class="form-select" asp-for="VegetationId" asp-items="ViewBag.Vegetations">
+            <option disabled selected value="Select a vegetation"></option>
+        </select>
+    </td>
+    <td class="text-left">
+        <select class="form-select" asp-for="WorkerId" asp-items="ViewBag.Workers">
+            <option value="">--- None ---</option>
+        </select>
+    </td>
+    <td class="text-left">
+        <input asp-for="DurationMinutes" class="form-control" min="0"/>
+    </td>
+    <td style="width: 1%; white-space: nowrap;">
+        <input type="hidden" asp-for="IdMeasure" />
+        <a class="btn btn-primary btn-sm" title="Save" hx-include="closest tr" hx-post="@Url.Action(nameof(MeasuresController.Edit))"><i
+            class="fas fa-save"></i></a>
+        <a class="btn btn-sm btn-warning" title="Back" hx-get="@Url.Action(nameof(MeasuresController.Get), new { id = Model.IdMeasure })">
+            <i class="fas fa-arrow-left"></i>
+        </a>
+    </td>
+</tr>

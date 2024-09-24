@@ -1,0 +1,70 @@
+@model WorkerViewModel
+
+<div style="display:flex;align-items:center;">
+    <h2 class="display-3" style="display: inline;">Worker #@Model.IdWorker</h2>
+    <a style="margin-left:10pt;" class="btn btn-warning btn-sm" title="Edit" asp-action="Edit" asp-route-id="@Model.IdWorker"><i
+            class="fas fa-edit"></i></a>
+    <form style="display:inline;" method="post" asp-action="Delete">
+        <input type="hidden" name="id" value="@Model.IdWorker" />
+        <button type="submit" class="btn btn-danger btn-sm delete" title="Delete"><i
+                class="fas fa-trash-alt delete"></i></button>
+    </form>
+</div>
+
+<table class="table table-bordered table-hover">
+    <thead class="table-dark">
+        @{
+            string[] columnsWorker = { "Type", "Tag", "Daily Wage", "Email", "Phone" };
+            for (int i = 0; i < columnsWorker.Length; i++)
+            {
+                <th>
+                    @columnsWorker[i]
+                </th>
+            }
+        }
+    </thead>
+    <tbody>
+        <tr>
+            <td class="text-left">@Html.DisplayFor(_ => Model.WorkerTypeCaption)</td>
+            <td class="text-left">@Html.DisplayFor(_ => Model.Tag)</td>
+            <td class="text-left">@Html.DisplayFor(_ => Model.DailyWage)</td>
+            <td class="text-left">@Html.DisplayFor(_ => Model.Email)</td>
+            <td class="text-left">@Html.DisplayFor(_ => Model.Phone)</td>
+        </tr>
+    </tbody>
+</table>
+
+@if (Model.Measures.Count != 0)
+{
+    <h5>Measures:</h5>
+    <table class="table table-bordered table-hover">
+    <thead class="table-dark">
+        @{
+                string[] columnsMeasures = { "Id", "Performed On", "Description", "Type", "Vegetation", "Duration, minutes" };
+                for (int i = 0; i < columnsMeasures.Length; i++)
+                {
+                    <th>
+                        @columnsMeasures[i]
+                    </th>
+                }
+            }
+        </thead>
+        <tbody>
+            @foreach (var measure in Model.Measures)
+            {
+                <tr>
+                    <td class="text-left">@Html.DisplayFor(_ => measure.IdMeasure)</td>
+                    <td class="text-left">@Html.DisplayFor(_ => measure.PerformedOn)</td>
+                    <td class="text-left">@Html.DisplayFor(_ => measure.Description)</td>
+                    <td class="text-left">@Html.DisplayFor(_ => measure.MeasureTypeCaption)</td>
+                    <td class="text-left">@Html.DisplayFor(_ => measure.Vegetation.Summary)</td>
+                    <td class="text-left">@Html.DisplayFor(_ => measure.DurationMinutes)</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+else
+{
+    <h5>The worker has performed no measures yet</h5>
+}

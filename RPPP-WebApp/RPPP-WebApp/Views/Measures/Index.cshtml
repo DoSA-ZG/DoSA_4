@@ -1,0 +1,51 @@
+@model MeasuresViewModel
+
+@{
+  ViewBag.Title = "Measures";
+}
+
+<div style="display:flex;align-items:center;">
+  <h1 style="display: inline;" class="display-3">Measures</h1>
+  <a style="margin-left:10pt;" class="btn btn-info btn-sm" asp-action="Create"><i class="fas fa-plus"></i></a>
+</div>
+
+<table class="table table-bordered table-hover">
+  <thead class="table-dark">
+    @{
+      string[] columns = { "Id", "Performed On", "Description", "Type", "Vegetation", "Worker", "Duration, minutes" };
+      for (int i = 0; i < columns.Length; i++)
+      {
+        <th>
+          <a style="color:white;" asp-route-sort="@(i + 1)" asp-route-page="@Model.PagingInfo.CurrentPage"
+            asp-route-ascending="@(Model.PagingInfo.Sort == i + 1 ? !Model.PagingInfo.Ascending : true)">
+            @columns[i]
+          </a>
+        </th>
+      }
+    }
+    <th></th>
+  </thead>
+  <tbody>
+    @foreach (var measure in Model.Measures)
+    {
+      <partial name="Get" model="measure" />
+    }
+  </tbody>
+</table>
+
+<div class="text-center">
+  <pager page-info="@Model.PagingInfo" page-action="Index" page-title="Enter page number"></pager>
+</div>
+
+@section styles {
+  <link rel="stylesheet" href="https://unpkg.com/tippy.js@6/themes/light.css" />
+  <link rel="stylesheet" href="~/lib/jqueryui/themes/base/jquery-ui.css" />
+}
+
+@section scripts {
+  <script src="~/js/pager.js" asp-append-version="true"></script>
+  <script src="~/lib/jqueryui/jquery-ui.js"></script>
+  <script src="~/lib/htmx/htmx.min.js" asp-append-version="true"></script> 
+  <script src="https://unpkg.com/@@popperjs/core@2"></script>
+  <script src="https://unpkg.com/tippy.js@6"></script>
+}

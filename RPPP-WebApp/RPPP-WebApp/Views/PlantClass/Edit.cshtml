@@ -1,0 +1,56 @@
+﻿@model RPPP_WebApp.Model.PlantClass
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+
+<hr />
+<h4>Edit plant:</h4>
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="IdPlantClass" />
+            <div class="form-group">
+                <label asp-for="Name" class="control-label"></label>
+                <input asp-for="Name" class="form-control" />
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Passport" class="control-label"></label>
+                <input asp-for="Passport" class="form-control" />
+                <span asp-validation-for="Passport" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ParentId" class="control-label"></label>
+                <select asp-for="ParentId" class="form-control" asp-items="ViewBag.ParentId"></select>
+                <span asp-validation-for="ParentId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="FiberPerServing" class="control-label"></label>
+                <input asp-for="FiberPerServing" class="form-control" />
+                <span asp-validation-for="FiberPerServing" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="PotassiumPerServing" class="control-label"></label>
+                <input asp-for="PotassiumPerServing" class="form-control" />
+                <span asp-validation-for="PotassiumPerServing" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10 mt-3">
+                    <input type="submit" value="Save" class="btn btn-success" />
+                    <a class="btn btn-danger" asp-action="Delete" asp-route-id="@Model.IdPlantClass">Delete</a>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a class="btn btn-info text-white mt-3 mb-3" asp-action="Details" asp-controller="Recipe" asp-route-id="@Model.IdPlantClass" asp-route-entityType="PlantClass">Back to list</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

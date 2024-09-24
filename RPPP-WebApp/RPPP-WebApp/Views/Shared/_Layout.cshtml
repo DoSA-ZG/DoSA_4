@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js" integrity="sha256-oP6HI/t1ek/3D5EVwM0EXu5BdN60J5uZ2X4Veo+4OFA=" crossorigin="anonymous"></script>
+
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no" />
+
+    <title>RPPP Homework</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/css/bootstrap.min.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/lib/font-awesome/css/all.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <link rel="stylesheet" href="~/lib/toastr.js/toastr.min.css" />
+    @RenderSection("styles", required: false)
+
+ 
+</head>
+<body>
+    <partial name="_Nav" />
+
+    <div class="container-fluid body-container">
+        @RenderBody()
+    </div>
+
+    <script>
+        window.applicationBaseUrl = '@Url.Content("~/")';
+    </script>
+
+    <script src="~/lib/jquery/jquery.min.js" asp-append-version="true"></script>
+    <script src="~/lib/bootstrap/js/bootstrap.bundle.min.js" asp-append-version="true"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    <script src="~/js/plantClass.js"></script>
+    <script src="~/js/recipe.js"></script>
+  <script src="~/js/purchaseActions.js"></script>
+    <script src="~/js/harvestActions.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+
+
+    <script src="~/lib/toastr.js/toastr.min.js" asp-append-version="true"></script>
+    <script>
+        toastr.options = {
+            positionClass: "toast-top-center"
+        };
+    </script>
+    <partial name="HandleMessage" />
+    @RenderSection("scripts", required: false)
+
+</body>
+</html>

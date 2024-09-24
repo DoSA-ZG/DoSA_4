@@ -1,0 +1,109 @@
+@model WorkersViewModel
+
+@{
+  ViewBag.Title = "Workers";
+}
+
+<div style="display:flex;align-items:center;">
+  <h1 style="display:inline;" class="display-3">Workers</h1>
+  <a style="margin-left:10pt;" class="btn btn-info btn-sm" asp-action="Create"><i class="fas fa-plus"></i></a>
+</div>
+
+<table class="table table-bordered table-hover">
+  <thead class="table-dark">
+    @{
+      string[] columns = { "Id", "Type", "Tag", "Daily Wage", "Email", "Phone", null };
+      var complexValue = Context.Request.Query["complex"];
+      bool complex = false;
+      bool.TryParse(complexValue, out complex);
+      if (complex)
+      {
+        columns[columns.Length - 1] = "Measures";
+      }
+      for (int i = 0; i < columns.Length; i++)
+      {
+        if (columns[i] == null)
+        {
+          continue;
+        }
+        if (i == columns.Length - 1)
+        {
+          <th>
+            @columns[i]
+          </th>
+        }
+        else
+        {
+          <th>
+            <a style="color:white;" asp-route-sort="@(i + 1)" asp-route-page="@Model.PagingInfo.CurrentPage"
+              asp-route-ascending="@(Model.PagingInfo.Sort == i + 1 ? !Model.PagingInfo.Ascending : true)"
+              asp-route-complex=@complex>
+              @columns[i]
+            </a>
+          </th>
+        }
+
+      }
+    }
+    <th></th>
+  </thead>
+  <tbody>
+    @foreach (var worker in Model.Workers)
+    {
+      <tr id="worker-@worker.IdWorker">
+        <td class="text-left">@Html.DisplayFor(_ => worker.IdWorker)</td>
+        <td class="text-left">@Html.DisplayFor(_ => worker.WorkerTypeCaption)</td>
+        <td class="text-left">@Html.DisplayFor(_ => worker.Tag)</td>
+        <td class="text-left">@Html.DisplayFor(_ => worker.DailyWage)</td>
+        <td class="text-left">@Html.DisplayFor(_ => worker.Email)</td>
+        <td class="text-left">@Html.DisplayFor(_ => worker.Phone)</td>
+        @if (worker.Measures.Count != 0)
+        {
+          <td>@worker.MeasuresSummary</td>
+        }
+        else if (complex)
+        {
+          <td>-</td>
+        }
+        <td style="width: 1%; white-space: nowrap;">
+          <a class="btn btn-info btn-sm" title="Info" asp-action="Get" asp-route-id="@worker.IdWorker"><i
+              class="fa-solid fa-circle-info"></i></a>
+          <a class="btn btn-warning btn-sm" title="Edit" asp-action="Edit" asp-route-id="@worker.IdWorker"><i
+              class="fas fa-edit"></i></a>
+          <form style="display:inline;" method="post" asp-action="Delete">
+            <input type="hidden" name="id" value="@worker.IdWorker" />
+            <button type="submit" class="btn btn-danger btn-sm delete" title="Delete"><i
+                class="fas fa-trash-alt delete"></i></button>
+          </form>
+        </td>
+      </tr>
+    }
+  </tbody>
+</table>
+
+<div class="text-center">
+  <pager page-info="@Model.PagingInfo" page-action="Index" page-title="Enter page number" complex=@complex></pager>
+</div>
+
+@section styles {
+  <link rel="stylesheet" href="https://unpkg.com/tippy.js@6/themes/light.css" />
+  <link rel="stylesheet" href="~/lib/jqueryui/themes/base/jquery-ui.css" />
+}
+
+@section scripts {
+  <script src="~/js/pager.js" asp-append-version="true"></script>
+  <script src="~/lib/jqueryui/jquery-ui.js"></script>
+  <script src="https://unpkg.com/@@popperjs/core@2"></script>
+  <script src="https://unpkg.com/tippy.js@6"></script>
+  <script type="text/javascript">
+    @foreach (var worker in Model.Workers)
+    {
+      if (!String.IsNullOrEmpty(worker.Notes))
+      {
+        <text>
+            tippy('#worker-@worker.IdWorker', {content: '@worker.Notes', theme: 'light'});
+        </text>
+      }
+    }
+  </script>
+}

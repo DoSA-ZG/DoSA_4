@@ -1,0 +1,59 @@
+﻿@model RPPP_WebApp.Model.Recipe
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h1>Create</h1>
+
+<h4>Recipe</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <!--<div class="form-group">
+                <label asp-for="IdRecipe" class="control-label"></label>
+                <input asp-for="IdRecipe" class="form-control" />
+                <span asp-validation-for="IdRecipe" class="text-danger"></span>
+            </div>-->
+            <div class="form-group">
+                <label asp-for="Description" class="control-label"></label>
+                <input asp-for="Description" class="form-control" />
+                <span asp-validation-for="Description" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="CaloriesPerServing" class="control-label"></label>
+                <input asp-for="CaloriesPerServing" class="form-control" />
+                <span asp-validation-for="CaloriesPerServing" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ApproximateDuration" class="control-label"></label>
+                <input asp-for="ApproximateDuration" class="form-control" />
+                <span asp-validation-for="ApproximateDuration" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="CuisineId" class="control-label"></label>
+                <select asp-for="CuisineId" class ="form-control" asp-items="ViewBag.CuisineId"></select>
+            </div>
+            <div class="form-group">
+                <label asp-for="Caption" class="control-label"></label>
+                <input asp-for="Caption" class="form-control" />
+                <span asp-validation-for="Caption" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="submit" value="Create" class="btn btn-success mt-3" />
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a class="btn btn-secondary mt-3" asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

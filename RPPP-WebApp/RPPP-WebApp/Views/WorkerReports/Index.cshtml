@@ -1,0 +1,16 @@
+@{
+  ViewBag.Title = "Worker Reports";
+}
+
+<a class="btn btn-primary btn-lg btn-block mt-3 ml-3" asp-action="Pdf">Top 10 most paid workers</a>
+
+<a class="btn btn-success btn-lg btn-block mt-3 ml-3" asp-action="Excel">Export to excel (simple)</a>
+
+<form class="col-xs-12 mt-2" asp-method="post" asp-action="ImportExcel" enctype="multipart/form-data">
+    <div class="form-group">
+        <input type="file" class="form-control" name="file" />
+        <button type="submit" class="btn btn-primary mt-2">Import excel</button>
+    </div>
+</form>
+
+<a class="btn btn-danger btn-lg btn-block mt-3 ml-3" asp-action="ExcelMasterDetail">Export to excel (master-detail)</a>

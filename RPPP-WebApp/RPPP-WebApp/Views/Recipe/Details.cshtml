@@ -1,0 +1,91 @@
+﻿@model RPPP_WebApp.Model.Recipe
+
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1>Details</h1>
+
+<div id="recipeContainer">
+    <h4>Recipe</h4>
+    <hr />
+   
+    <dl class="row">
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Description)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Description)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.CaloriesPerServing)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.CaloriesPerServing)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.ApproximateDuration)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.ApproximateDuration)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Caption)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Caption)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Cuisine)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Cuisine.Caption)
+        </dd>
+    </dl>
+
+
+<div>
+    <a class="btn btn-warning text-white" onclick="showEditRecipeForm(@Model.IdRecipe)">Edit</a>
+    <a class="btn btn-danger text-white" onclick="showDeleteRecipeForm(@Model.IdRecipe)">Delete</a>
+    <a class="btn btn-info text-white" asp-action="Index">Back to List</a>
+</div>
+</div>
+<hr />
+<div id="plantsContainer">
+<h4>Plants used in this recipe</h4>
+
+    <table class="table">
+    @foreach (var ingredient in Model.Ingredients)
+    {
+        var plantClass = ingredient.PlantClass;
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => plantClass.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => plantClass.Passport)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => plantClass.FiberPerServing)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => plantClass.PotassiumPerServing)
+            </td>
+
+            <td>
+                 <a class="btn btn-success" onclick="showDetailsForm(@plantClass.IdPlantClass)">Details</a>
+
+
+                <a class="btn btn-warning text-white" onclick="showEditForm(@plantClass.IdPlantClass)">Edit</a>
+                <a class="btn btn-danger" onclick="showDeleteForm(@plantClass.IdPlantClass)">Delete</a>
+                <a class="btn btn-info text-white" asp-action="Index" asp-controller="Recipe">Back to List</a>
+            </td>
+        </tr>
+
+    }
+
+   
+    </table>
+    <a class="btn btn-info col-auto text-white mb-3" onclick="getPlantForm(@Model.IdRecipe)">Add plant to the recipe</a>
+</div>

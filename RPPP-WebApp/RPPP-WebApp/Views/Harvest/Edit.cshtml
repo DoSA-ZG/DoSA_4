@@ -1,0 +1,58 @@
+﻿@model RPPP_WebApp.Model.Harvest
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h1>Edit harvest</h1>
+
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit" asp-controller="Harvest" asp-route-id="@Model.IdHarvest" method="post" id="harvestForm">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="IdHarvest" />
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="IdHarvest" />
+            <div class="form-group">
+                <label asp-for="CollectedOn" class="control-label"></label>
+                <input asp-for="CollectedOn" class="form-control" />
+                <span asp-validation-for="CollectedOn" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Weight" class="control-label"></label>
+                <input asp-for="Weight" class="form-control" />
+                <span asp-validation-for="Weight" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Tag" class="control-label"></label>
+                <input asp-for="Tag" class="form-control" />
+                <span asp-validation-for="Tag" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="VegetationId" class="control-label"></label>
+                <select asp-for="VegetationId" class="form-control" asp-items="ViewBag.VegetationId"></select>
+                <span asp-validation-for="VegetationId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10 mt-2">
+                    <input type="submit" value="Save" class="btn btn-success" id="saveHarvestBtn" />
+
+                    <form id="deleteForm" asp-action="Delete" asp-controller="Harvest" method="post">
+                        <input type="hidden" asp-for="IdHarvest" />
+                        <button type="button" class="btn btn-danger" onclick="deletePurchase(@Model.IdHarvest)">Delete</button>
+                    </form>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a class="btn btn-secondary text-white mt-3" asp-action="Details" asp-controller="Harvest" asp-route-id="@Model?.IdHarvest">Back to List</a>
+
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

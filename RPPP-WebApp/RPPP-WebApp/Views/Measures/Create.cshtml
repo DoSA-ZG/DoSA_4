@@ -1,0 +1,53 @@
+@model MeasureViewModel
+
+@{
+    ViewBag.Title = "Add a measure";
+}
+
+<h2 class="display-3">Add a measure</h2>
+
+<form asp-action="Create" method="post">
+    <div asp-validation-summary="All"></div>
+    <div class="mb-3">
+        <label asp-for="Description" class="form-label"></label>
+        <input asp-for="Description" class="form-control" />
+        <div class="form-text"><span asp-validation-for="Description" class="text-danger"></span></div>
+    </div>
+    <div class="mb-3">
+        <label asp-for="PerformedOn" class="form-label"></label>
+        <input type="datetime-local" asp-for="PerformedOn" class="form-control" />
+        <div class="form-text"><span asp-validation-for="PerformedOn" class="text-danger"></span></div>
+    </div>
+    <div class="mb-3">
+        <label asp-for="MeasureTypeId" class="form-label"></label>
+        <input asp-for="MeasureTypeCaption" class="form-control" data-autocomplete="measuretypes" data-autocomplete-placeholder-name="measure-type"/>
+        <input asp-for="MeasureTypeId" type="hidden" data-autocomplete-placeholder="measure-type"/>
+        <div class="form-text"><span asp-validation-for="MeasureTypeId" class="text-danger"></span></div>
+    </div>
+    <div class="mb-3">
+        <label asp-for="VegetationId" class="form-label"></label>
+        <select class="form-select" asp-for="VegetationId" asp-items="ViewBag.Vegetations">
+            <option disabled selected value="Select a vegetation"></option>
+        </select>
+        <div class="form-text"><span asp-validation-for="VegetationId" class="text-danger"></span></div>
+    </div>
+    <div class="mb-3">
+        <label asp-for="WorkerId" class="form-label"></label>
+        <select class="form-select" asp-for="WorkerId" asp-items="ViewBag.Workers">
+            <option value="">--- None ---</option>
+        </select>
+        <div class="form-text"><span asp-validation-for="WorkerId" class="text-danger"></span></div>
+    </div>
+    <div class="mb-3">
+        <label asp-for="DurationMinutes" class="form-label"></label>
+        <input asp-for="DurationMinutes" class="form-control" min="0"/>
+    </div>
+    <div class="text-center">
+        <button class="btn btn-primary" type="submit">Add</button>
+        <a asp-action="Index" class="btn btn-default">Cancel</a>
+    </div>
+</form>
+
+@section scripts {
+    <script src="~/js/autocomplete.js" asp-append-version="true"></script>
+}

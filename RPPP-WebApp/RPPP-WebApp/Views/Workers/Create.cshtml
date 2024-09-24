@@ -1,0 +1,120 @@
+@model WorkerViewModel
+
+@{
+    ViewBag.Title = "Add a worker";
+}
+
+<h2 class="display-3">Add a worker</h2>
+
+<form asp-action="Create" method="post">
+    <div asp-validation-summary="All"></div>
+    <div class="mb-3">
+        <label asp-for="DailyWage" class="form-label"></label>
+        <input asp-for="DailyWage" class="form-control" required />
+        <div class="form-text"><span asp-validation-for="DailyWage" class="text-danger"></span></div>
+    </div>
+    <div class="mb-3">
+        <label asp-for="Tag" class="form-label"></label>
+        <input asp-for="Tag" class="form-control" />
+        <div class="form-text"><span asp-validation-for="Tag" class="text-danger"></span></div>
+    </div>
+    <div class="mb-3">
+        <label asp-for="WorkerTypeId" class="form-label"></label>
+        <input asp-for="WorkerTypeCaption" class="form-control" data-autocomplete="workertypes" data-autocomplete-placeholder-name="worker-type"/>
+        <input asp-for="WorkerTypeId" type="hidden" data-autocomplete-placeholder="worker-type"/>
+        <div class="form-text"><span asp-validation-for="WorkerTypeId" class="text-danger"></span></div>
+    </div>
+    <div class="mb-3">
+        <label asp-for="Notes" class="form-label"></label>
+        <input asp-for="Notes" class="form-control" />
+        <div class="form-text"><span asp-validation-for="Notes" class="text-danger"></span></div>
+    </div>
+    <div class="mb-3">
+        <label asp-for="Email" class="form-label"></label>
+        <input asp-for="Email" class="form-control" />
+        <div class="form-text"><span asp-validation-for="Email" class="text-danger"></span></div>
+    </div>
+    <div class="mb-3">
+        <label asp-for="Phone" class="form-label"></label>
+        <input asp-for="Phone" class="form-control" />
+        <div class="form-text"><span asp-validation-for="Phone" class="text-danger"></span></div>
+    </div>
+
+    <h4 class="mt-5">Measures</h4>
+    <table class="table table-bordered table-hover" id="table-measures">
+        <thead class="table-dark">
+            @{
+                string[] columnsMeasures = { "Id", "Performed On", "Description", "Type", "Vegetation", "Duration, minutes", "" };
+                for (int i = 0; i < columnsMeasures.Length; i++)
+                {
+                    <th>
+                        @columnsMeasures[i]
+                    </th>
+                }
+            }
+        </thead>
+        <tbody>
+            <tr style="visibility:hidden"></tr>
+            @if (Model != null) {
+                int measureIdx = 0;
+                foreach (var measure in Model.Measures)
+                {
+                    <tr>
+                        <td>
+                            <input class="measure-index" type="hidden" name="Measures.Index" value="@measureIdx"/>
+                            <input class="measure-id" type="hidden" name="Measures[@measureIdx].IdMeasure" value="@measure.IdMeasure" />
+                            <input type="hidden" name="Measures[@measureIdx].WorkerId" value="@Model.IdWorker" />
+                            @(measure.IdMeasure == 0 ? "-" : measure.IdMeasure)
+                        </td>
+                        <td class="text-left">
+                            <input min="1753-01-01T00:00:00" max="9999-12-31T00:00:00" required type="datetime-local" name="Measures[@measureIdx].PerformedOn" value="@measure.PerformedOn.ToString("yyyy-MM-ddThh:mm")" class="form-control" />
+                        </td>
+                        <td class="text-left">
+                            <input name="Measures[@measureIdx].Description" value="@measure.Description" class="form-control" />
+                        </td>
+                        <td class="text-left">
+                            <input name="Measures[@measureIdx].MeasureTypeCaption" value="@measure.MeasureTypeCaption" class="form-control" data-autocomplete="measuretypes" data-autocomplete-placeholder-name="measure-type-@measureIdx"/>
+                            <input name="Measures[@measureIdx].MeasureTypeId" type="hidden" data-autocomplete-placeholder="measure-type-@measureIdx" value="@measure.MeasureTypeId"/>
+                        </td>
+                        <td class="text-left">
+                            <select class="form-select" name="Measures[@measureIdx].VegetationId" required>
+                                <option disabled selected value="Select a vegetation"></option>
+                                @foreach (var item in ViewBag.Vegetations) {
+                                    bool selected = measure.VegetationId.ToString() == item.Value;
+                                    <option selected="@selected" value="@item.Value">@item.Text</option>
+                                }
+                            </select>
+                        </td>
+                        <td class="text-left">
+                            <input name="Measures[@measureIdx].DurationMinutes" value="@measure.DurationMinutes" class="form-control" min="0"/>
+                        </td>
+                        <td>
+                            <a class="btn btn-sm btn-danger delete-measure" title="Delete"><i class="fas fa-trash-alt"></i></a>
+                        </td>
+                    </tr>
+                    measureIdx++;
+                }
+            }
+        </tbody>
+    </table>
+
+    <a id="add-measure" class="btn btn-success">New measure</a>
+    <div class="mt-3">
+        <a id="assign-measure" class="btn btn-warning">Assign measure</a>
+        with id
+        <input id="assign-id" type="number" style="display:inline"/>
+    </div>
+
+    <div class="text-center">
+        <button class="btn btn-primary" type="submit">Add</button>
+        <a asp-action="Index" class="btn btn-default">Cancel</a>
+    </div>
+</form>
+
+<partial name="NewMeasureTemplate" />
+<partial name="ExistingMeasureTemplate" />
+
+@section scripts {
+  <script src="~/js/autocomplete.js"></script>
+  <script src="~/js/editWorker.js"></script>
+}

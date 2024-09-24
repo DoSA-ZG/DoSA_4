@@ -1,0 +1,80 @@
+@model IEnumerable<RPPP_WebApp.Model.Plot>
+
+@{
+    ViewData["Title"] = "Plot";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Plot</h1>
+
+<p>
+    <a class="btn btn-primary text-white" asp-action="Create">Add New</a>
+
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Latitude)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Longitude)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Tag)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Area)
+            </th>
+          
+            <th>
+                @Html.DisplayNameFor(model => model.Infrastructure)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.SoilQuality)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.SoilType)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Sunlight)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Latitude)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Longitude)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Tag)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Area)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.InfrastructureNavigation.Caption)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.SoilQualityNavigation.Caption)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.SoilTypeNavigation.Caption)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.SunlightNavigation.Caption)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.IdPlot">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.IdPlot">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.IdPlot">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

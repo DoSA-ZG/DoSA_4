@@ -1,0 +1,17 @@
+<h1>Farm manager</h1>
+
+<div class="row menu-row">
+    <a asp-controller="Plot" asp-action="Index" class="bg-primary col-sm menu-item">Plots</a>
+    <a asp-controller="Workers" asp-action="Index" asp-route-complex="true" class="bg-success col-sm menu-item">Workers</a>
+    <a asp-controller="Measures" asp-action="Index" class="bg-info col-sm menu-item">Measures</a>
+</div>
+<div class="row menu-row">
+    <a asp-controller="Recipe" asp-action="Index" class="bg-success col-sm menu-item">Recipes</a>
+    <a asp-controller="PlantClass" asp-action="Index" class="bg-info col-sm menu-item">PlantClasses</a>
+    <a asp-controller="Ingredient" asp-action="Index" class="bg-primary col-sm menu-item">Ingredients</a>
+</div>
+<div class="row menu-row">
+    <a asp-controller="Purchase" asp-action="Index" class="bg-info col-sm menu-item">Purchases</a>
+    <a asp-controller="Harvest" asp-action="Index" class="bg-primary col-sm menu-item">Harvests</a>
+    <a asp-controller="Error" asp-action="Test" class="bg-success col-sm menu-item">Throw exception to test handling</a>
+</div>

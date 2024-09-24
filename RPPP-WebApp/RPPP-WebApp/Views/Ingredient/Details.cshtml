@@ -1,0 +1,32 @@
+﻿@model RPPP_WebApp.Model.Ingredient
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1>Details</h1>
+
+<div>
+    <h4>Ingredient</h4>
+    <hr />
+    <dl class="row">
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.PlantClass)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.PlantClass.Name)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Recipe)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Recipe.Caption)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Details" asp-route-id="@Model?.IdIngredient" class="btn btn-success">Details</a>
+    <a asp-action="Edit" asp-route-id="@Model?.IdIngredient" class="btn btn-warning text-white">Edit</a>
+    <a asp-action="Delete" asp-route-id="@Model?.IdIngredient" class="btn btn-danger">Delete</a>
+    <a asp-action="Index" class="btn btn-info text-white mt-3">Back to List</a>
+</div>
